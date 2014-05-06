@@ -1,12 +1,14 @@
+package HangmanDude;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public abstract class hangmanDudeGame {
 	public static final int MAXSTRIKES = 6;
 
-	protected String word;
+	public String word;
 
-	protected int strikes;
+	public int strikes;
 
 	private Scanner scan;
 
@@ -17,7 +19,7 @@ public abstract class hangmanDudeGame {
 	 */
 	public hangmanDudeGame(String word) {
 		// Get word to guess
-		this.word = word.toLowerCase();
+		this.setWord(word.toLowerCase());
 		guesses = new ArrayList<Character>();
 		strikes = 0;
 
@@ -32,7 +34,7 @@ public abstract class hangmanDudeGame {
 			char c = s.charAt(0);
 			if (!guesses.contains(c)) {
 				guesses.add(c);
-				if (word.indexOf(c) == -1) {
+				if (getWord().indexOf(c) == -1) {
 					strikes++;
 				}
 			}
@@ -41,17 +43,21 @@ public abstract class hangmanDudeGame {
 		drawHangman();
 	}
 
-	protected boolean isGameOver() {
-		return strikes >= MAXSTRIKES || areAllLettersGuessed();
+	public boolean isGameOver() {
+		return (strikes >= MAXSTRIKES) || (areAllLettersGuessed());
 	}
 
 	protected boolean areAllLettersGuessed() {
-		for (int i = 0; i < word.length(); i++) {
-			if (!guesses.contains(word.charAt(i))) {
+		for (int i = 0; i < getWord().length(); i++) {
+			if (!guesses.contains(getWord().charAt(i))) {
 				return false;
 			}
 		}
 		return true;
+	}
+
+	public String getWord() {
+		return word;
 	}
 
 	/**
@@ -64,4 +70,9 @@ public abstract class hangmanDudeGame {
 	 * @param strikes
 	 */
 	public abstract void drawHangman();
+
+	public void setWord(String word) {
+		this.word = word;
+	}
+
 }

@@ -1,3 +1,4 @@
+package HangmanDude;
 import java.util.Scanner;
 
 
@@ -11,7 +12,7 @@ import java.util.Scanner;
  */
 public class wordsetterPlain extends wordsetter
 {
-    wordsetterPlain( String dictFile )
+    public wordsetterPlain( String dictFile )
     {
         super( dictFile );
 

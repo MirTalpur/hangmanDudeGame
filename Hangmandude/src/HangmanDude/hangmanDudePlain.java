@@ -1,3 +1,4 @@
+package HangmanDude;
 public class hangmanDudePlain extends hangmanDudeGame
 {
     public hangmanDudePlain( String word )
@@ -47,7 +48,7 @@ public class hangmanDudePlain extends hangmanDudeGame
         System.out.print( "\t|  " );
         for ( char c : this.guesses )
         {
-            if ( word.indexOf( c ) == -1 )
+            if ( getWord().indexOf( c ) == -1 )
                 System.out.print( c + " " );
         }
         System.out.println();
@@ -56,9 +57,9 @@ public class hangmanDudePlain extends hangmanDudeGame
 
         // Draws the letter blanks by looping over each letter in word.
         System.out.print( "\t" );
-        for ( int i = 0; i < word.length(); i++ )
+        for ( int i = 0; i < getWord().length(); i++ )
         {
-            char c = word.charAt( i );
+            char c = getWord().charAt( i );
             if ( guesses.contains( c ) )
             {
                 System.out.print( c + " " );
@@ -88,7 +89,7 @@ public class hangmanDudePlain extends hangmanDudeGame
                 System.out.println( " L====J" );
                 System.out.println( " '-..-'" );
                 System.out.println( "YOU LOSE" );
-                System.out.println( "THE WORD WAS " + word.toUpperCase() );
+                System.out.println( "THE WORD WAS " + getWord().toUpperCase() );
             }
         }
     }

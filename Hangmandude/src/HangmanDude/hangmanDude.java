@@ -1,3 +1,4 @@
+package HangmanDude;
 public class hangmanDude
 {
 
