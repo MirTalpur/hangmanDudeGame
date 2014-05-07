@@ -12,7 +12,7 @@ public abstract class hangmanDudeGame {
 
 	private Scanner scan;
 
-	protected ArrayList<Character> guesses;
+	public ArrayList<Character> guesses;
 
 	/**
 	 * Constructor
@@ -47,7 +47,7 @@ public abstract class hangmanDudeGame {
 		return (strikes >= MAXSTRIKES) || (areAllLettersGuessed());
 	}
 
-	protected boolean areAllLettersGuessed() {
+	public boolean areAllLettersGuessed() {
 		for (int i = 0; i < getWord().length(); i++) {
 			if (!guesses.contains(getWord().charAt(i))) {
 				return false;

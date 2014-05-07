@@ -10,11 +10,11 @@ public class hangmanDudeTest {
 	@Test
 	public void hangmanDudeTest() {
 		wordsetter test = new wordsetterPlain("words.txt");
-		//wordsetter test1 = new wordsetterPlain("words.txt");
+		//check if its null
 		assertNotNull("Is it null yo",test);
-		System.out.println(test.toString());
-		//hangmanDudeGame game = new hangmanDudePlain( test.getWord() );
-		//System.out.println(test.toString());
+		//print out the string
+		test.setWord("boss");
+		//check if they equal
 		assertEquals("Is it Equal yo","boss",test.getWord());
 	}
 	

@@ -16,7 +16,7 @@ public class wordsetterPlain extends wordsetter
     {
         super( dictFile );
 
-        while ( this.word == null )
+        while ( this.getWord() == null )
         {
             System.out.print( "Pick a Word: " );
             Scanner scan = new Scanner( System.in );
@@ -24,7 +24,7 @@ public class wordsetterPlain extends wordsetter
             System.out.println();
             if ( dict.get( word ) != null )
             {
-                this.word = word;
+                this.setWord(word);
             }
             else
             {

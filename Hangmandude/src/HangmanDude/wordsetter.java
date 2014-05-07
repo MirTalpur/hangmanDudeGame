@@ -20,7 +20,7 @@ public abstract class wordsetter
 {
     HashMap<String, Integer> dict = new HashMap<String, Integer>();
 
-    protected String word;
+    private String word;
 
 
     public wordsetter( String dictFile )
@@ -67,4 +67,9 @@ public abstract class wordsetter
     {
         return word;
     }
+
+
+	public void setWord(String word) {
+		this.word = word;
+	}
 }
