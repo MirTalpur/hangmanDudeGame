@@ -1,11 +1,24 @@
 package HangmanDude;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Scanner;
+
+import javax.jms.JMSException;
+
 public class hangmanDudePlain extends hangmanDudeGame
 {
-    public hangmanDudePlain( String word )
+    public hangmanDudePlain() throws JMSException, InterruptedException, URISyntaxException, IOException
     {
-        super( word );
+        super();
     }
 
+    
+    public String nextWord(Scanner scan)
+    {
+    	System.out.print("Guess next Letter: ");
+		return scan.next().toLowerCase();
+    }
 
     public void drawHangman()
     {

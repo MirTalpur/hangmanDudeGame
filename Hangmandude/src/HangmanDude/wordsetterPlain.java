@@ -1,5 +1,8 @@
 package HangmanDude;
+import java.net.URISyntaxException;
 import java.util.Scanner;
+
+import javax.jms.JMSException;
 
 
 /**
@@ -12,7 +15,7 @@ import java.util.Scanner;
  */
 public class wordsetterPlain extends wordsetter
 {
-    public wordsetterPlain( String dictFile )
+    public wordsetterPlain( String dictFile ) throws JMSException, InterruptedException, URISyntaxException
     {
         super( dictFile );
 
