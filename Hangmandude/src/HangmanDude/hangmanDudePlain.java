@@ -8,17 +8,31 @@ import javax.jms.JMSException;
 
 public class hangmanDudePlain extends hangmanDudeGame
 {
+	private Scanner scan;
+	
     public hangmanDudePlain() throws JMSException, InterruptedException, URISyntaxException, IOException
     {
         super();
+    	scan = new Scanner(System.in);
     }
 
     
-    public String nextWord(Scanner scan)
-    {
-    	System.out.print("Guess next Letter: ");
-		return scan.next().toLowerCase();
-    }
+    public void playGame() {
+		while (!isGameOver()) {
+			drawHangman();
+	    	System.out.print("Guess next Letter: ");
+			String s = scan.next().toLowerCase();
+			char c = s.charAt(0);
+			if (!guesses.contains(c)) {
+				guesses.add(c);
+				if (getWord().indexOf(c) == -1) {
+					strikes++;
+				}
+			}
+		}
+
+		drawHangman();
+	}
 
     public void drawHangman()
     {

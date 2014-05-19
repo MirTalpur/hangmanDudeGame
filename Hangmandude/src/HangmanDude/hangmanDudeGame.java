@@ -17,8 +17,6 @@ public abstract class hangmanDudeGame {
 
 	public int strikes;
 
-	private Scanner scan;
-
 	public ArrayList<Character> guesses;
 
 	/**
@@ -62,24 +60,9 @@ public abstract class hangmanDudeGame {
 		guesses = new ArrayList<Character>();
 		strikes = 0;
 
-		scan = new Scanner(System.in);
 	}
 
-	public void playGame() {
-		while (!isGameOver()) {
-			drawHangman();
-			String s = nextWord(scan);
-			char c = s.charAt(0);
-			if (!guesses.contains(c)) {
-				guesses.add(c);
-				if (getWord().indexOf(c) == -1) {
-					strikes++;
-				}
-			}
-		}
-
-		drawHangman();
-	}
+	public abstract void playGame();
 
 	public boolean isGameOver() {
 		return (strikes >= MAXSTRIKES) || (areAllLettersGuessed());
@@ -108,8 +91,6 @@ public abstract class hangmanDudeGame {
 	 * @param strikes
 	 */
 	public abstract void drawHangman();
-
-	public abstract String nextWord(Scanner scan);
 
 	public void setWord(String word) {
 		this.word = word;

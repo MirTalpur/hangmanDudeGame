@@ -20,9 +20,9 @@ public class hangmanDudeGUI extends hangmanDudeGame {
 	}
 
 	@Override
-	public String nextWord(Scanner scan) {
+	public void playGame() {
 		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 }

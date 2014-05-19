@@ -11,7 +11,7 @@ public class HangmanDudeGuess
     public static void main( String[] args ) throws JMSException, InterruptedException, URISyntaxException, IOException
     {
         //wordsetter set = new wordsetterPlain( "words.txt" );
-        hangmanDudeGame game = new hangmanDudeGUI();
+        hangmanDudeGame game = new hangmanDudePlain();
         game.playGame();
     }
 }
