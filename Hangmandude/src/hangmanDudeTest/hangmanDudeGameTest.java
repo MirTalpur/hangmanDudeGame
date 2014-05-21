@@ -1,14 +1,23 @@
 package hangmanDudeTest;
 
 import static org.junit.Assert.*;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
+
+import javax.jms.JMSException;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import HangmanDude.*;
 
 public class hangmanDudeGameTest {
-
-	hangmanDudeGame hangmanDudeGameTest = new hangmanDudePlain("boss");
+	hangmanDudeGame hangmanDudeGameTest;
+	public hangmanDudeGameTest() throws JMSException, InterruptedException, URISyntaxException, IOException {
+		hangmanDudeGameTest = new hangmanDudePlain();
+		
+	}
 
 	@Test
 	public void hangmanDudeGameTesting() {
