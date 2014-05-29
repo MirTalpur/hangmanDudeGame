@@ -22,13 +22,7 @@ public class hangmanDudePlain extends hangmanDudeGame
 			drawHangman();
 	    	System.out.print("Guess next Letter: ");
 			String s = scan.next().toLowerCase();
-			char c = s.charAt(0);
-			if (!guesses.contains(c)) {
-				guesses.add(c);
-				if (getWord().indexOf(c) == -1) {
-					strikes++;
-				}
-			}
+            guessLetter(s);
 		}
 
 		drawHangman();

@@ -29,7 +29,14 @@ public abstract class hangmanDudeGame {
 	 */
 	public hangmanDudeGame() throws JMSException, InterruptedException,
 			URISyntaxException, IOException {
+	    
+	    // FOR TESTING ONLY. COMMENT OUT WHEN PLAYING
+	    this.setWord("PAPER");
+        guesses = new ArrayList<Character>();
+        strikes = 0;
+        return;
 
+/*
 		final Session session = PlayerChallenger.createSession();
 		final String queue_name = "" + PlayerChallenger.randomLetter()
 				+ PlayerChallenger.randomLetter()
@@ -58,7 +65,7 @@ public abstract class hangmanDudeGame {
 
 		this.setWord(word.toLowerCase());
 		guesses = new ArrayList<Character>();
-		strikes = 0;
+		strikes = 0;*/
 
 	}
 
@@ -76,21 +83,21 @@ public abstract class hangmanDudeGame {
 		}
 		return true;
 	}
+	
+	public void guessLetter(String s)
+	{
+	    char c = s.charAt(0);
+        if (!guesses.contains(c)) {
+            guesses.add(c);
+            if (getWord().indexOf(c) == -1) {
+                strikes++;
+            }
+        }
+	}
 
 	public String getWord() {
 		return word;
 	}
-
-	/**
-	 * This method draws the hangman platform and the person on the platform. It
-	 * takes the integer provided and draws the person based on the number of
-	 * strikes that have been given.
-	 * 
-	 * Also draws the blanks based on the word and the guesses given.
-	 * 
-	 * @param strikes
-	 */
-	public abstract void drawHangman();
 
 	public void setWord(String word) {
 		this.word = word;
