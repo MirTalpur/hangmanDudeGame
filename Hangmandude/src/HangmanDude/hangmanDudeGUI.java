@@ -94,7 +94,7 @@ public class hangmanDudeGUI extends hangmanDudeGame {
         jPanel2.add(EXIT);
         EXIT.setBounds(110, 260, 90, 30);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ali\\Desktop\\Swing\\test\\background.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("HangmanPics/background.png")); // NOI18N
         jPanel2.add(jLabel1);
         jLabel1.setBounds(0, 0, 330, 510);
 
@@ -333,32 +333,32 @@ public class hangmanDudeGUI extends hangmanDudeGame {
         jPanel2.add(Z);
         Z.setBounds(60, 460, 40, 20);
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ali\\Desktop\\HangmanPics\\hangman1.jpg")); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon("HangmanPics/hangman1.jpg")); // NOI18N
         jPanel2.add(jLabel2);
         jLabel2.setBounds(0, 0, 330, 500);
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ali\\Desktop\\HangmanPics\\hangman2.jpg")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon("HangmanPics/hangman2.jpg")); // NOI18N
         jPanel2.add(jLabel3);
         jLabel3.setBounds(0, 0, 330, 500);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ali\\Desktop\\HangmanPics\\hangman3.jpg")); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon("HangmanPics/hangman3.jpg")); // NOI18N
         jPanel2.add(jLabel4);
         jLabel4.setBounds(0, 0, 330, 500);
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ali\\Desktop\\HangmanPics\\hangman4.jpg")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon("HangmanPics/hangman4.jpg")); // NOI18N
         jPanel2.add(jLabel5);
         jLabel5.setBounds(0, 0, 330, 500);
 
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ali\\Desktop\\HangmanPics\\hangman5.jpg")); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon("HangmanPics/hangman5.jpg")); // NOI18N
         jLabel6.setText("jLabel6");
         jPanel2.add(jLabel6);
         jLabel6.setBounds(0, 0, 330, 500);
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ali\\Desktop\\HangmanPics\\hangman6.jpg")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon("HangmanPics/hangman6.jpg")); // NOI18N
         jPanel2.add(jLabel7);
         jLabel7.setBounds(0, 0, 330, 500);
 
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\Ali\\Desktop\\HangmanPics\\hangman7.jpg")); // NOI18N
+        jLabel8.setIcon(new javax.swing.ImageIcon("HangmanPics/hangman7.jpg")); // NOI18N
         jPanel2.add(jLabel8);
         jLabel8.setBounds(0, 0, 330, 500);
 
