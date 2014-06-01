@@ -6,27 +6,77 @@ import java.util.Scanner;
 
 import javax.jms.JMSException;
 
+
 public class hangmanDudePlain extends hangmanDudeGame
 {
-	private Scanner scan;
-	
-    public hangmanDudePlain() throws JMSException, InterruptedException, URISyntaxException, IOException
+    private Scanner scan;
+
+
+    public hangmanDudePlain( String wordsFile ) throws Exception
     {
-        super();
-    	scan = new Scanner(System.in);
+        super( wordsFile );
+        scan = new Scanner( System.in );
+
+        initGame();
     }
 
-    
-    public void playGame() {
-		while (!isGameOver()) {
-			drawHangman();
-	    	System.out.print("Guess next Letter: ");
-			String s = scan.next().toLowerCase();
-            guessLetter(s);
-		}
 
-		drawHangman();
-	}
+    private void initGame() throws Exception
+    {
+        System.out.println( "WELCOME TO HANGMANDUDE \n" );
+        while ( playerType == 0 )
+        {
+            System.out.print( "Type \"set\" to set the word, \n"
+                + "or type \"guess\" to guess a word: " );
+            String s = scan.next().toLowerCase();
+            if ( s.equals( "set" ) )
+            {
+                playerType = 1;
+                setPlayerType();
+
+                while ( this.word == null )
+                {
+                    System.out.print( "\nPick a Word: " );
+                    Scanner scan = new Scanner( System.in );
+                    String word = scan.nextLine();
+                    if ( !setWord( word ) )
+                    {
+                        System.out.println( "Invalid Word." );
+                    }
+                }
+                pushWordToServer();
+            }
+            else if ( s.equals( "guess" ) )
+            {
+                playerType = 2;
+                setPlayerType();
+                getWordFromServer();
+            }
+            else
+                System.out.println( "Invalid Choice. \n" );
+        }
+
+        playGame();
+
+    }
+
+
+    public void playGame() throws Exception
+    {
+        while ( !isGameOver() )
+        {
+            drawHangman();
+            if ( playerType == 2 )
+            {
+                System.out.print( "Guess next Letter: " );
+                String s = scan.next().toLowerCase();
+                guessLetter( s );
+            }
+        }
+
+        drawHangman();
+    }
+
 
     public void drawHangman()
     {

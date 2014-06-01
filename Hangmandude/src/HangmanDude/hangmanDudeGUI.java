@@ -35,13 +35,15 @@ public class hangmanDudeGUI extends hangmanDudeGame
     /**
      * Creates new form GUI
      */
-    public hangmanDudeGUI()
+    public hangmanDudeGUI( String wordsFile )
         throws JMSException,
         InterruptedException,
         URISyntaxException,
         IOException
     {
-        super();
+        super( wordsFile );
+        
+        playGame();
     }
 
 

@@ -1,106 +1,171 @@
 package HangmanDude;
 
+import java.awt.List;
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import javax.jms.JMSException;
 import javax.jms.Session;
 
-public abstract class hangmanDudeGame {
-	public static final int MAXSTRIKES = 6;
 
-	public String word;
+public abstract class hangmanDudeGame implements HangmanMessageListener
+{
+    public static final int MAXSTRIKES = 6;
 
-	public int strikes;
+    public String word;
 
-	public ArrayList<Character> guesses;
+    ArrayList<String> dict = new ArrayList<String>();
 
-	/**
-	 * Constructor
-	 * 
-	 * @throws JMSException
-	 * @throws InterruptedException
-	 * @throws URISyntaxException
-	 * @throws IOException
-	 */
-	public hangmanDudeGame() throws JMSException, InterruptedException,
-			URISyntaxException, IOException {
-	    
-	    // FOR TESTING ONLY. COMMENT OUT WHEN PLAYING
-	    this.setWord("PAPER");
-        guesses = new ArrayList<Character>();
-        strikes = 0;
-        return;
+    public int strikes;
 
-/*
-		final Session session = PlayerChallenger.createSession();
-		final String queue_name = "" + PlayerChallenger.randomLetter()
-				+ PlayerChallenger.randomLetter()
-				+ PlayerChallenger.randomLetter();
-		PlayerChallenger
-				.addWordToQueue("SomeWord," + queue_name,
-						PlayerChallenger.QUEUEPREFIX
-								+ PlayerChallenger.WORD_GAME_QUEUE, session);
+    public ArrayList<Character> guesses = new ArrayList<Character>();
 
-		String word = null;
-		while (word == null) {
-			try {
-				word = PlayerChallenger.getItemFromWordQueue(
-						PlayerChallenger.QUEUEPREFIX + queue_name, session);
-			} catch (JMSException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+    protected int playerType;
 
-		this.setWord(word.toLowerCase());
-		guesses = new ArrayList<Character>();
-		strikes = 0;*/
+    Networking player;
 
-	}
 
-	public abstract void playGame();
+    /**
+     * Constructor
+     * 
+     * @throws JMSException
+     * @throws InterruptedException
+     * @throws URISyntaxException
+     * @throws IOException
+     */
+    public hangmanDudeGame( String wordsFile ) throws IOException
+    {
+        initializeDictionary( wordsFile );
+    }
 
-	public boolean isGameOver() {
-		return (strikes >= MAXSTRIKES) || (areAllLettersGuessed());
-	}
 
-	public boolean areAllLettersGuessed() {
-		for (int i = 0; i < getWord().length(); i++) {
-			if (!guesses.contains(getWord().charAt(i))) {
-				return false;
-			}
-		}
-		return true;
-	}
-	
-	public void guessLetter(String s)
-	{
-	    char c = s.charAt(0);
-        if (!guesses.contains(c)) {
-            guesses.add(c);
-            if (getWord().indexOf(c) == -1) {
+    public abstract void playGame() throws Exception;
+
+
+    private void initializeDictionary( String wordsFile ) throws IOException
+    {
+        File dictionary = new File( wordsFile );
+        BufferedReader reader = null;
+
+        reader = new BufferedReader( new FileReader( dictionary ) );
+        String text = null;
+
+        while ( ( text = reader.readLine() ) != null )
+        {
+            dict.add( text );
+        }
+        reader.close();
+
+    }
+
+
+    public void setPlayerType() throws JMSException
+    {
+        player = new Networking( this );
+    }
+
+
+    public boolean isGameOver()
+    {
+        return ( strikes >= MAXSTRIKES ) || ( areAllLettersGuessed() );
+    }
+
+
+    public boolean areAllLettersGuessed()
+    {
+        for ( int i = 0; i < getWord().length(); i++ )
+        {
+            if ( !guesses.contains( getWord().charAt( i ) ) )
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    public void guessLetter( String s ) throws Exception
+    {
+        player.GamerGuessLetter( s );
+        char c = s.charAt( 0 );
+        if ( !guesses.contains( c ) )
+        {
+            guesses.add( c );
+            if ( getWord().indexOf( c ) == -1 )
+            {
                 strikes++;
             }
         }
-	}
+    }
 
-	public String getWord() {
-		return word;
-	}
 
-	public void setWord(String word) {
-		this.word = word;
-	}
+    public String getWord()
+    {
+        return word;
+    }
+
+
+    public boolean setWord( String word )
+    {
+        if ( dict.contains( word ) )
+        {
+            this.word = word;
+
+            return true;
+        }
+        return false;
+    }
+
+
+    protected void getWordFromServer() throws Exception
+    {
+        word = player.GamerGetGameChallangeWord();
+        player.GamerAcceptChallange();
+    }
+
+
+    protected void pushWordToServer() throws JMSException
+    {
+        player.ChallangerCreateGame( word );
+    }
+
+
+    @Override
+    public void challangeAccepted() throws JMSException
+    {
+        // TODO
+    }
+
+
+    @Override
+    public void challangeRejected()
+    {
+        // TODO Auto-generated method stub
+
+    }
+
+
+    @Override
+    public void playerQuit()
+    {
+        // TODO Auto-generated method stub
+
+    }
+
+
+    @Override
+    public void playerGuessed( String guess )
+    {
+        guesses.add( guess.charAt( 0 ) );
+
+    }
 
 }
