@@ -176,7 +176,7 @@ public class hangmanDudeGUI extends hangmanDudeGame
     }
 
 
-    private void checkStrikes( String guess )
+    private void checkStrikes( String guess ) throws Exception
     {
         guessLetter( guess );
         images[strikes].setVisible( false );
