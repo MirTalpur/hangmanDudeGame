@@ -1,6 +1,6 @@
 package HangmanDude;
 
-public class Constants {
+public class NetworkingConstants {
 	public static String ACTIVEMQ_URL = "tcp://mmenarini.ucsd.edu:61616";
 	public static String USERNAME = "student";	
 	public static String PASSWORD = "cse110";

@@ -12,9 +12,9 @@ import org.junit.Test;
 import HangmanDude.*;
 
 public class hangmanDudeGameTest {
-	hangmanDudeGame hangmanDudeGameTest;
+	HangmanDudeGameModel hangmanDudeGameTest;
 	public hangmanDudeGameTest() throws JMSException, InterruptedException, URISyntaxException, IOException {
-		hangmanDudeGameTest = new hangmanDudePlain();
+		hangmanDudeGameTest = new HangmanDudePlainView();
 		
 	}
 

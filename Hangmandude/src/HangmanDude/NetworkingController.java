@@ -22,15 +22,15 @@ import org.springframework.jms.connection.CachingConnectionFactory;
 
 @Configuration
 @ComponentScan
-public class Networking implements MessageListener {
+public class NetworkingController implements MessageListener {
 	Connection connection = null;
 	HangmanMessageListener listener = null;
 	Session session = null;
 	ArrayList<MessageConsumer> consumers = new ArrayList<MessageConsumer>();
 	private String game_challange_queue_name = null;
 	
-	public Networking() {}
-	public Networking(HangmanMessageListener msg_listener) throws JMSException {
+	public NetworkingController() {}
+	public NetworkingController(HangmanMessageListener msg_listener) throws JMSException {
 		@SuppressWarnings("resource")
 		//AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Networking.class);
 		//ConnectionFactory factory =  context.getBean(CachingConnectionFactory.class);
@@ -55,7 +55,7 @@ public class Networking implements MessageListener {
 	
 	public void end() throws JMSException {
 		if(game_challange_queue_name != null) {
-			queueMessage(game_challange_queue_name, Constants.PLAYER_QUIT);
+			queueMessage(game_challange_queue_name, NetworkingConstants.PLAYER_QUIT);
 		}
 		for(MessageConsumer consumer : consumers)
 			consumer.close();
@@ -68,11 +68,11 @@ public class Networking implements MessageListener {
 	//@Bean
 	ConnectionFactory connectionFactory() {
 		return new CachingConnectionFactory(new ActiveMQConnectionFactory(
-				Constants.USERNAME, Constants.PASSWORD, Constants.ACTIVEMQ_URL));
+				NetworkingConstants.USERNAME, NetworkingConstants.PASSWORD, NetworkingConstants.ACTIVEMQ_URL));
 	}
 	
 	private String readQueueSync(String queue_name) throws JMSException {
-		Queue queue = session.createQueue(Constants.QUEUE_PREFIX + queue_name);
+		Queue queue = session.createQueue(NetworkingConstants.QUEUE_PREFIX + queue_name);
 		MessageConsumer consumer = session.createConsumer(queue);
 		String word = ((TextMessage) consumer.receive()).getText();
 		consumer.close();
@@ -81,7 +81,7 @@ public class Networking implements MessageListener {
 	}
 	
 	private void readQueueAsync(String queue_name) throws JMSException {
-		Queue queue = session.createQueue(Constants.QUEUE_PREFIX + queue_name);
+		Queue queue = session.createQueue(NetworkingConstants.QUEUE_PREFIX + queue_name);
 		MessageConsumer consumer = session.createConsumer(queue);
 		consumers.add(consumer);
 		consumer.setMessageListener(this);
@@ -90,7 +90,7 @@ public class Networking implements MessageListener {
 	}
 	
 	private void queueMessage(String queue_name, String message) throws JMSException {
-		Queue queue = session.createQueue(Constants.QUEUE_PREFIX +  queue_name);
+		Queue queue = session.createQueue(NetworkingConstants.QUEUE_PREFIX +  queue_name);
 		MessageProducer producer = session.createProducer(queue);
 		producer.send(session.createTextMessage(message));
 		producer.close();
@@ -101,7 +101,7 @@ public class Networking implements MessageListener {
 		if(game_challange_queue_name == null)
 			throw new Exception("No challange available. Did you forget to call GetGameChallangeWord?");
 		else {
-			queueMessage(game_challange_queue_name, Constants.ChallangeAccepted);
+			queueMessage(game_challange_queue_name, NetworkingConstants.ChallangeAccepted);
 			System.err.println("ACCEPTING CHALLANGE");
 		}
 		
@@ -111,14 +111,14 @@ public class Networking implements MessageListener {
 		if(game_challange_queue_name == null)
 			throw new Exception("No challange available. Did you forget to call GetGameChallangeWord?");
 		else {
-			queueMessage(game_challange_queue_name, Constants.ChallangeRejected);
+			queueMessage(game_challange_queue_name, NetworkingConstants.ChallangeRejected);
 			System.err.println("REJECTING CHALLANGE");
 		}
 	}
 	
 	
 	public String GamerGetGameChallangeWord() throws JMSException {
-		String word = readQueueSync(Constants.GAMEQUEUE);
+		String word = readQueueSync(NetworkingConstants.GAMEQUEUE);
 		if(word != null) {
 			game_challange_queue_name = word;
 			return word.substring(0, word.indexOf('-'));
@@ -129,7 +129,7 @@ public class Networking implements MessageListener {
 	public void ChallangerCreateGame(String word) throws JMSException {
 		String random_hash = randomString(5);
 		game_challange_queue_name = word+"-"+random_hash;
-		queueMessage(Constants.GAMEQUEUE, game_challange_queue_name );
+		queueMessage(NetworkingConstants.GAMEQUEUE, game_challange_queue_name );
 		readQueueAsync(game_challange_queue_name);
 		
 	}
@@ -137,7 +137,7 @@ public class Networking implements MessageListener {
 	public void GamerGuessLetter(String guess) throws Exception {
 		if(game_challange_queue_name == null)
 			throw new Exception("No challange available. Did you forget to call GetGameChallangeWord?");
-		queueMessage(game_challange_queue_name, Constants.GUESS_PREFIX + guess);
+		queueMessage(game_challange_queue_name, NetworkingConstants.GUESS_PREFIX + guess);
 	}
 
 
@@ -147,45 +147,23 @@ public class Networking implements MessageListener {
 			System.err.println("Received Message: " + text);
 				
 			
-			if(text == Constants.ChallangeAccepted) {
+			if(text == NetworkingConstants.ChallangeAccepted) {
 				listener.challangeAccepted();
 			}
-			else if(text == Constants.ChallangeRejected) {
+			else if(text == NetworkingConstants.ChallangeRejected) {
 				listener.challangeRejected();
 			}
-			else if(text == Constants.PLAYER_QUIT) {
+			else if(text == NetworkingConstants.PLAYER_QUIT) {
 				listener.playerQuit();
 			}
-			else if(text.contains(Constants.GUESS_PREFIX)) {
-				listener.playerGuessed(text.substring(Constants.GUESS_PREFIX.length()));
+			else if(text.contains(NetworkingConstants.GUESS_PREFIX)) {
+				listener.playerGuessed(text.substring(NetworkingConstants.GUESS_PREFIX.length()));
 			}
 				
 			
 		} catch (JMSException e) {
 			e.printStackTrace();
 		}
-		
-	}
-	
-	
-	
-	public static void main(String...args) throws Exception {
-		Networking guess = new Networking(new SampleListenerClass());
-		Networking set = new Networking(new SampleListenerClass());
-		
-		
-		set.ChallangerCreateGame("HelloWorld");
-		
-		
-		guess.GamerGetGameChallangeWord();
-		guess.GamerAcceptChallange();
-		guess.GamerGuessLetter("S");
-		
-		
-		System.in.read();
-		guess.end();
-		set.end();
-		
 		
 	}
 }

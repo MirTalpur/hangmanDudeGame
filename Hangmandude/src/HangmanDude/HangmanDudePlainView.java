@@ -2,17 +2,18 @@ package HangmanDude;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.jms.JMSException;
 
 
-public class hangmanDudePlain extends hangmanDudeGame
+public class HangmanDudePlainView extends HangmanDudeGameModel
 {
     private Scanner scan;
 
 
-    public hangmanDudePlain( String wordsFile ) throws Exception
+    public HangmanDudePlainView( String wordsFile ) throws Exception
     {
         super( wordsFile );
         scan = new Scanner( System.in );
@@ -63,14 +64,20 @@ public class hangmanDudePlain extends hangmanDudeGame
 
     public void playGame() throws Exception
     {
+        int last = 0;
+        ;
         while ( !isGameOver() )
         {
-            drawHangman();
-            if ( playerType == 2 )
+            if ( guesses.size() != last || playerType == 2 )
             {
-                System.out.print( "Guess next Letter: " );
-                String s = scan.next().toLowerCase();
-                guessLetter( s );
+                drawHangman();
+                if ( playerType == 2 )
+                {
+                    System.out.print( "Guess next Letter: " );
+                    String s = scan.next().toLowerCase();
+                    guessLetter( s );
+                }
+                last = guesses.size();
             }
         }
 
@@ -146,11 +153,15 @@ public class hangmanDudePlain extends hangmanDudeGame
         // Draws the ending if game is over.
         if ( isGameOver() )
         {
-            if ( areAllLettersGuessed() )
+            if ( playerType == 2 && areAllLettersGuessed() )
             {
                 System.out.println( "YOU WIN" );
             }
-            else
+            else if ( playerType == 1 && areAllLettersGuessed() )
+            {
+                System.out.println( "YOUR OPPONENT HAS SUCCEEDED." );
+            }
+            else if ( !areAllLettersGuessed() && playerType == 2 )
             {
                 System.out.println();
                 System.out.println( " .-\"\"-." );
@@ -162,6 +173,11 @@ public class hangmanDudePlain extends hangmanDudeGame
                 System.out.println( "YOU LOSE" );
                 System.out.println( "THE WORD WAS " + getWord().toUpperCase() );
             }
+            else
+            {
+                System.out.println( "YOU HAVE SUCCESSFULLY HUNG YOUR OPPONENT." );
+            }
+            System.exit( 0 );
         }
     }
 }

@@ -16,7 +16,7 @@ import javax.jms.JMSException;
 import javax.jms.Session;
 
 
-public abstract class hangmanDudeGame implements HangmanMessageListener
+public abstract class HangmanDudeGameModel implements HangmanMessageListener
 {
     public static final int MAXSTRIKES = 6;
 
@@ -30,7 +30,7 @@ public abstract class hangmanDudeGame implements HangmanMessageListener
 
     protected int playerType;
 
-    Networking player;
+    NetworkingController player;
 
 
     /**
@@ -41,7 +41,7 @@ public abstract class hangmanDudeGame implements HangmanMessageListener
      * @throws URISyntaxException
      * @throws IOException
      */
-    public hangmanDudeGame( String wordsFile ) throws IOException
+    public HangmanDudeGameModel( String wordsFile ) throws IOException
     {
         initializeDictionary( wordsFile );
     }
@@ -69,7 +69,7 @@ public abstract class hangmanDudeGame implements HangmanMessageListener
 
     public void setPlayerType() throws JMSException
     {
-        player = new Networking( this );
+        player = new NetworkingController( this );
     }
 
 
@@ -164,8 +164,12 @@ public abstract class hangmanDudeGame implements HangmanMessageListener
     @Override
     public void playerGuessed( String guess )
     {
-        guesses.add( guess.charAt( 0 ) );
-
+        char c = guess.charAt( 0 );
+        guesses.add( c );
+        if ( getWord().indexOf( c ) == -1 )
+        {
+            strikes++;
+        }
     }
 
 }

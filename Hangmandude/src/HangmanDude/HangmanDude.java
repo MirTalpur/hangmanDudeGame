@@ -11,6 +11,6 @@ public class HangmanDude
     public static void main( String[] args ) throws Exception
     {
         //wordsetter set = new wordsetterPlain(  );
-        hangmanDudeGame game = new hangmanDudePlain("words.txt");
+        HangmanDudeGameModel game = new HangmanDudeGUIView("words.txt");
     }
 }
