@@ -138,14 +138,12 @@ public abstract class HangmanDudeGameModel implements HangmanMessageListener
     }
 
 
-    @Override
     public void challangeAccepted() throws JMSException
     {
         // TODO
     }
 
 
-    @Override
     public void challangeRejected()
     {
         // TODO Auto-generated method stub
@@ -153,7 +151,6 @@ public abstract class HangmanDudeGameModel implements HangmanMessageListener
     }
 
 
-    @Override
     public void playerQuit()
     {
         // TODO Auto-generated method stub
@@ -161,7 +158,6 @@ public abstract class HangmanDudeGameModel implements HangmanMessageListener
     }
 
 
-    @Override
     public void playerGuessed( String guess )
     {
         char c = guess.charAt( 0 );

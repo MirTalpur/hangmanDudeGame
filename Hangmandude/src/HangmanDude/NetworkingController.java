@@ -117,13 +117,18 @@ public class NetworkingController implements MessageListener {
 	}
 	
 	
-	public String GamerGetGameChallangeWord() throws JMSException {
-		String word = readQueueSync(NetworkingConstants.GAMEQUEUE);
-		if(word != null) {
-			game_challange_queue_name = word;
-			return word.substring(0, word.indexOf('-'));
+	public String GamerGetGameChallangeWord() throws JMSException, InterruptedException {
+		String word = null;
+		while(true) {
+			word = readQueueSync(NetworkingConstants.GAMEQUEUE);
+			if(word != null) {
+				game_challange_queue_name = word;
+				return word.substring(0, word.indexOf('-'));
+			}
+			else
+				Thread.sleep(500);
 		}
-		return word;
+		
 	}
 	
 	public void ChallangerCreateGame(String word) throws JMSException {

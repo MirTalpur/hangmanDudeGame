@@ -101,7 +101,6 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
                 new Thread( new Runnable()
                 {
 
-                    @Override
                     public void run()
                     {
                         playerType = 2;
@@ -246,6 +245,7 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
         images[strikes].setVisible( false );
         if ( isGameOver() )
         {
+        	JOptionPane.showMessageDialog(null, "You Lost!");
             // GAME IS OVER. END
             System.exit( 0 );
         }
@@ -267,6 +267,7 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
         if ( isGameOver() )
         {
             // GAME IS OVER. END
+        	JOptionPane.showMessageDialog(null, "Your opponent Lost!");
             System.exit( 0 );
         }
         
