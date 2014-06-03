@@ -43,6 +43,7 @@ public class HangmanDudePlainView extends HangmanDudeGameModel
             if ( s.equals( "set" ) )
             {
                 setPlayerType(1);
+                scan.nextLine();
 
                 while ( this.word == null )
                 {
