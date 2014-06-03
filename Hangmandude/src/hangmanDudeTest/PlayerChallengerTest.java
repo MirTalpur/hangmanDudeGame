@@ -12,16 +12,17 @@ import org.junit.Test;
 
 import HangmanDude.PlayerChallenger;
 
+/*
+ * Tests Challenger Side
+ */
 
 public class PlayerChallengerTest
 {
-
     @Test
     public void testRandomLetter()
     {
         assertTrue( Character.isLetter( PlayerChallenger.randomLetter() ) );
     }
-
 
     @Test
     public void testAddWordAndGetItemFromWordQueue()
