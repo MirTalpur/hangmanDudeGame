@@ -147,6 +147,7 @@ public class NetworkingController implements MessageListener {
 
 
 	public void onMessage(Message msg) {
+		System.err.println("THIS HAPPENED!");
 		try {
 			String text = ((TextMessage) msg).getText();
 			System.err.println("Received Message: " + text);
@@ -171,4 +172,5 @@ public class NetworkingController implements MessageListener {
 		}
 		
 	}
+	
 }

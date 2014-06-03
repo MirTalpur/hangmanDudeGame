@@ -1,6 +1,7 @@
 package HangmanDude;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Window;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -9,7 +10,10 @@ import java.util.Scanner;
 
 import javax.jms.JMSException;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 
 /**
@@ -21,6 +25,9 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
 
     // Variables declaration
 
+	
+	
+	
     private javax.swing.JToggleButton[] letterButtons = new javax.swing.JToggleButton[26];
 
     private javax.swing.JLabel[] images = new javax.swing.JLabel[8];
@@ -30,6 +37,8 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
     private javax.swing.JToggleButton START;
 
     private javax.swing.JToggleButton SET;
+    
+    private JLabel AREA;
     
     javax.swing.JLabel waitingLabel;
 
@@ -88,16 +97,20 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
         jPanel2.add( waitingLabel );
         waitingLabel.setBounds( 70, 10, 200, 30 );
         waitingLabel.setVisible( false );
-
+        
+        
+        
         START.setFont( new java.awt.Font( "Traditional Arabic", 1, 14 ) ); // NOI18N
         START.setText( "GUESS" );
+        START.setBackground(new Color(89, 69, 42));
+        START.setForeground(Color.WHITE);
         START.addActionListener( new java.awt.event.ActionListener()
         {
             public void actionPerformed( java.awt.event.ActionEvent evt )
             {
 
                 START.setText( "WAIT..." );
-
+                AREA.setVisible(true);
                 new Thread( new Runnable()
                 {
 
@@ -112,6 +125,11 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
                             START.setVisible( false );
                             SET.setVisible( false );
                             EXIT.setVisible( false );
+                            String str = "";
+                            for(int i = 0; i < word.length(); i++)
+                            	str += "_ ";
+                            AREA.setText(str);
+                            AREA.setVisible(true);
                             // jPanel2.setVisible(false);
                             images[0].setVisible( false );
                         }
@@ -128,9 +146,11 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
         } );
         jPanel2.add( START );
         START.setBounds( 110, 200, 90, 31 );
-
+        
         SET.setFont( new java.awt.Font( "Traditional Arabic", 1, 14 ) ); // NOI18N
         SET.setText( "SET" );
+        SET.setBackground(new Color(89, 69, 42));
+        SET.setForeground(Color.WHITE);
         SET.addActionListener( new java.awt.event.ActionListener()
         {
             public void actionPerformed( java.awt.event.ActionEvent evt )
@@ -145,13 +165,17 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
                         s = JOptionPane.showInputDialog( "Input Word for Your Opponent." );
                     }
                     pushWordToServer();
+                    String str = "";
+                    for(int i = 0; i < word.length(); i++)
+                    	str += "_ ";
+                    AREA.setText(str);
 
+                    AREA.setVisible(true);
                     START.setVisible( false );
                     SET.setVisible( false );
                     EXIT.setVisible( false );
-                    // jPanel2.setVisible(false);
                     images[0].setVisible( false );
-                    waitingLabel.setVisible( true );
+//                    waitingLabel.setVisible( true );
 
                     for ( int x = 0; x < letterButtons.length; x++ )
                     {
@@ -170,6 +194,8 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
 
         EXIT.setFont( new java.awt.Font( "Traditional Arabic", 1, 14 ) ); // NOI18N
         EXIT.setText( "EXIT" );
+        EXIT.setBackground(new Color(89, 69, 42));
+        EXIT.setForeground(Color.WHITE);
         EXIT.addActionListener( new java.awt.event.ActionListener()
         {
             public void actionPerformed( java.awt.event.ActionEvent evt )
@@ -179,7 +205,16 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
         } );
         jPanel2.add( EXIT );
         EXIT.setBounds( 110, 320, 90, 30 );
-
+        
+        AREA = new JLabel();
+        
+//        AREA.setBackground(new Color(Color.TRANSLUCENT));
+        AREA.setForeground(Color.WHITE);
+        AREA.setFont(new Font(Font.MONOSPACED, Font.BOLD, 25));
+        AREA.setHorizontalAlignment(SwingConstants.CENTER);
+        jPanel2.add(AREA);
+        AREA.setVisible(false);
+        AREA.setBounds(60, 270, 200, 40);
         images[0].setIcon( new javax.swing.ImageIcon( "HangmanPics/background.png" ) ); // NOI18N
         jPanel2.add( images[0] );
         images[0].setBounds( 0, 0, 330, 510 );
@@ -242,6 +277,13 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
     private void checkStrikes( String guess ) throws Exception
     {
         guessLetter( guess );
+        String curr_val = AREA.getText();
+        if(word.contains(guess)) {
+        	int index = word.indexOf(guess);
+        	char [] arr =  curr_val.toCharArray();
+        	arr[index*2] = guess.charAt(0);
+        	AREA.setText(new String(arr));
+        }
         images[strikes].setVisible( false );
         if ( isGameOver() )
         {
@@ -251,18 +293,23 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
         }
     }
 
+    public void challange_was_accepted() {
+    	waitingLabel.setVisible(false);
 
+    }
     @Override
     public void playGame()
     {
         initComponents();
     }
-    
+    @Override
+    public void challangeAccepted() throws JMSException
+    {
+        waitingLabel.setVisible(false);
+    }
     @Override
     public void playerGuessed( String guess )
-    {
-        waitingLabel.setVisible( false );
-        super.playerGuessed( guess );
+    {        super.playerGuessed( guess );
         images[strikes].setVisible( false );
         if ( isGameOver() )
         {

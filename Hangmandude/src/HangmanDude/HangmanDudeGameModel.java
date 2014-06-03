@@ -65,7 +65,8 @@ public abstract class HangmanDudeGameModel implements HangmanMessageListener
         reader.close();
 
     }
-
+    
+    public abstract void challange_was_accepted();
 
     public void setPlayerType() throws JMSException
     {
@@ -137,10 +138,9 @@ public abstract class HangmanDudeGameModel implements HangmanMessageListener
         player.ChallangerCreateGame( word );
     }
 
-
     public void challangeAccepted() throws JMSException
     {
-        // TODO
+        challange_was_accepted();
     }
 
 

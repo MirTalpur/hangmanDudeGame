@@ -60,7 +60,7 @@ public class HangmanDudePlainView extends HangmanDudeGameModel
         playGame();
 
     }
-
+    public void challange_was_accepted() {}
 
     public void playGame() throws Exception
     {
