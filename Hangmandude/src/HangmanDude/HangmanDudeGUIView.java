@@ -25,9 +25,6 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
 
     // Variables declaration
 
-	
-	
-	
     private javax.swing.JToggleButton[] letterButtons = new javax.swing.JToggleButton[26];
 
     private javax.swing.JLabel[] images = new javax.swing.JLabel[8];
@@ -37,9 +34,9 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
     private javax.swing.JToggleButton START;
 
     private javax.swing.JToggleButton SET;
-    
+
     private JLabel AREA;
-    
+
     javax.swing.JLabel waitingLabel;
 
     private javax.swing.JPanel jPanel2;
@@ -97,20 +94,18 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
         jPanel2.add( waitingLabel );
         waitingLabel.setBounds( 70, 10, 200, 30 );
         waitingLabel.setVisible( false );
-        
-        
-        
+
         START.setFont( new java.awt.Font( "Traditional Arabic", 1, 14 ) ); // NOI18N
         START.setText( "GUESS" );
-        START.setBackground(new Color(89, 69, 42));
-        START.setForeground(Color.WHITE);
+        START.setBackground( new Color( 89, 69, 42 ) );
+        START.setForeground( Color.WHITE );
         START.addActionListener( new java.awt.event.ActionListener()
         {
             public void actionPerformed( java.awt.event.ActionEvent evt )
             {
 
                 START.setText( "WAIT..." );
-                AREA.setVisible(true);
+                AREA.setVisible( true );
                 new Thread( new Runnable()
                 {
 
@@ -126,10 +121,10 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
                             SET.setVisible( false );
                             EXIT.setVisible( false );
                             String str = "";
-                            for(int i = 0; i < word.length(); i++)
-                            	str += "_ ";
-                            AREA.setText(str);
-                            AREA.setVisible(true);
+                            for ( int i = 0; i < word.length(); i++ )
+                                str += "_ ";
+                            AREA.setText( str );
+                            AREA.setVisible( true );
                             // jPanel2.setVisible(false);
                             images[0].setVisible( false );
                         }
@@ -146,11 +141,11 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
         } );
         jPanel2.add( START );
         START.setBounds( 110, 200, 90, 31 );
-        
+
         SET.setFont( new java.awt.Font( "Traditional Arabic", 1, 14 ) ); // NOI18N
         SET.setText( "SET" );
-        SET.setBackground(new Color(89, 69, 42));
-        SET.setForeground(Color.WHITE);
+        SET.setBackground( new Color( 89, 69, 42 ) );
+        SET.setForeground( Color.WHITE );
         SET.addActionListener( new java.awt.event.ActionListener()
         {
             public void actionPerformed( java.awt.event.ActionEvent evt )
@@ -166,16 +161,16 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
                     }
                     pushWordToServer();
                     String str = "";
-                    for(int i = 0; i < word.length(); i++)
-                    	str += "_ ";
-                    AREA.setText(str);
+                    for ( int i = 0; i < word.length(); i++ )
+                        str += "_ ";
+                    AREA.setText( str );
 
-                    AREA.setVisible(true);
+                    AREA.setVisible( true );
                     START.setVisible( false );
                     SET.setVisible( false );
                     EXIT.setVisible( false );
                     images[0].setVisible( false );
-//                    waitingLabel.setVisible( true );
+                    // waitingLabel.setVisible( true );
 
                     for ( int x = 0; x < letterButtons.length; x++ )
                     {
@@ -194,8 +189,8 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
 
         EXIT.setFont( new java.awt.Font( "Traditional Arabic", 1, 14 ) ); // NOI18N
         EXIT.setText( "EXIT" );
-        EXIT.setBackground(new Color(89, 69, 42));
-        EXIT.setForeground(Color.WHITE);
+        EXIT.setBackground( new Color( 89, 69, 42 ) );
+        EXIT.setForeground( Color.WHITE );
         EXIT.addActionListener( new java.awt.event.ActionListener()
         {
             public void actionPerformed( java.awt.event.ActionEvent evt )
@@ -205,16 +200,16 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
         } );
         jPanel2.add( EXIT );
         EXIT.setBounds( 110, 320, 90, 30 );
-        
+
         AREA = new JLabel();
-        
-//        AREA.setBackground(new Color(Color.TRANSLUCENT));
-        AREA.setForeground(Color.WHITE);
-        AREA.setFont(new Font(Font.MONOSPACED, Font.BOLD, 25));
-        AREA.setHorizontalAlignment(SwingConstants.CENTER);
-        jPanel2.add(AREA);
-        AREA.setVisible(false);
-        AREA.setBounds(60, 270, 200, 40);
+
+        // AREA.setBackground(new Color(Color.TRANSLUCENT));
+        AREA.setForeground( Color.WHITE );
+        AREA.setFont( new Font( Font.MONOSPACED, Font.BOLD, 25 ) );
+        AREA.setHorizontalAlignment( SwingConstants.CENTER );
+        jPanel2.add( AREA );
+        AREA.setVisible( false );
+        AREA.setBounds( 10, 200, 300, 100 );
         images[0].setIcon( new javax.swing.ImageIcon( "HangmanPics/background.png" ) ); // NOI18N
         jPanel2.add( images[0] );
         images[0].setBounds( 0, 0, 330, 510 );
@@ -272,51 +267,98 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
         // System.out.println( "test" );
         frame.setVisible( true );
     }
+    
+    public void guessLetter(String guess) throws Exception
+    {
+        
+        if ( word.contains( guess ) )
+        {
+            int offset = 0;
+            String subword = word;
+            while ( subword.contains( guess ) )
+            {
+                String curr_val = AREA.getText();
+                int index = subword.indexOf( guess );
+                char[] arr = curr_val.toCharArray();
+                arr[( index + offset ) * 2] = guess.charAt( 0 );
+                AREA.setText( new String( arr ) );
+                subword = subword.substring( index + 1 );
+                offset += index + 1;
+            }
+        }
+        images[strikes].setVisible( false );
+    }
 
 
     private void checkStrikes( String guess ) throws Exception
     {
+        super.guessLetter( guess );
         guessLetter( guess );
-        String curr_val = AREA.getText();
-        if(word.contains(guess)) {
-        	int index = word.indexOf(guess);
-        	char [] arr =  curr_val.toCharArray();
-        	arr[index*2] = guess.charAt(0);
-        	AREA.setText(new String(arr));
-        }
-        images[strikes].setVisible( false );
+        
         if ( isGameOver() )
         {
-        	JOptionPane.showMessageDialog(null, "You Lost!");
+            if ( areAllLettersGuessed() )
+            {
+                JOptionPane.showMessageDialog( null, "You Won!" );
+            }
+            else
+            {
+                JOptionPane.showMessageDialog( null, "You Lost!" );
+            }
             // GAME IS OVER. END
             System.exit( 0 );
         }
     }
 
-    public void challange_was_accepted() {
-    	waitingLabel.setVisible(false);
+
+    public void challange_was_accepted()
+    {
+        waitingLabel.setVisible( false );
 
     }
+
+
     @Override
     public void playGame()
     {
         initComponents();
     }
+
+
     @Override
     public void challangeAccepted() throws JMSException
     {
-        waitingLabel.setVisible(false);
+        waitingLabel.setVisible( false );
     }
+
+
     @Override
-    public void playerGuessed( String guess )
-    {        super.playerGuessed( guess );
+    public void playerGuessed( String guess ) 
+    {
+        super.playerGuessed( guess );
+        try
+        {
+            guessLetter(guess);
+        }
+        catch ( Exception e )
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         images[strikes].setVisible( false );
         if ( isGameOver() )
         {
             // GAME IS OVER. END
-        	JOptionPane.showMessageDialog(null, "Your opponent Lost!");
+            if ( areAllLettersGuessed() )
+            {
+                JOptionPane.showMessageDialog( null, "Your opponent Won!" );
+            }
+            else
+            {
+                JOptionPane.showMessageDialog( null, "Your opponent Lost!" );
+            }
             System.exit( 0 );
         }
-        
+
     }
 }
