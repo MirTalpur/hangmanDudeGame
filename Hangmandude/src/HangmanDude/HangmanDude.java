@@ -1,9 +1,6 @@
 package HangmanDude;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Scanner;
-import javax.jms.JMSException;
 
 
 /**
@@ -18,9 +15,9 @@ public class HangmanDude
     public static final String DICTIONARY = "words.txt";
 
 
+    @SuppressWarnings("resource")
     public static void main( String[] args ) throws Exception
     {
-        HangmanDudeGameModel game;
         int numberOfLines;
         Scanner scan = new Scanner( System.in );
 
@@ -36,9 +33,9 @@ public class HangmanDude
         if ( numberOfLines == 1 )
         {
             System.out.println( "\n\n" );
-            game = new HangmanDudePlainView( DICTIONARY );
+            new HangmanDudePlainView( DICTIONARY );
         }
         else
-            game = new HangmanDudeGUIView( DICTIONARY );
+            new HangmanDudeGUIView( DICTIONARY );
     }
 }

@@ -7,7 +7,6 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.springframework.jms.connection.CachingConnectionFactory;
 
 /**
  * Contains a main method to clear the server queue.

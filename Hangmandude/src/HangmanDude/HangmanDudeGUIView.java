@@ -2,17 +2,13 @@ package HangmanDude;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Window;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Scanner;
-import java.util.Scanner;
 
 import javax.jms.JMSException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
 
@@ -64,7 +60,6 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
     /**
      * This method is called from within the constructor to initialize the form.
      */
-    @SuppressWarnings("unchecked")
     private void initComponents()
     {
         JFrame frame = new javax.swing.JFrame();
@@ -177,7 +172,6 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
                 }
                 catch ( Exception e )
                 {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
@@ -227,7 +221,6 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
                     }
                     catch ( Exception e )
                     {
-                        // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
@@ -351,7 +344,6 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
         }
         catch ( Exception e )
         {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         images[strikes].setVisible( false );

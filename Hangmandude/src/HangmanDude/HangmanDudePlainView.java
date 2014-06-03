@@ -1,11 +1,7 @@
 package HangmanDude;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.jms.JMSException;
 
 
 /**

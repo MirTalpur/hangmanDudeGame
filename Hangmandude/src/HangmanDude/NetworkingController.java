@@ -15,8 +15,6 @@ import javax.jms.Session;
 import javax.jms.TextMessage;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.connection.CachingConnectionFactory;
@@ -52,7 +50,6 @@ public class NetworkingController implements MessageListener
     public NetworkingController( HangmanMessageListener msg_listener )
         throws JMSException
     {
-        @SuppressWarnings("resource")
         // AnnotationConfigApplicationContext context = new
         // AnnotationConfigApplicationContext(Networking.class);
         // ConnectionFactory factory =
