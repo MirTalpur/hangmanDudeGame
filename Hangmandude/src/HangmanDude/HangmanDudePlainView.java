@@ -8,11 +8,21 @@ import java.util.Scanner;
 import javax.jms.JMSException;
 
 
+/**
+ * 
+ * @author Team 17
+ * 
+ */
 public class HangmanDudePlainView extends HangmanDudeGameModel
 {
     private Scanner scan;
 
 
+    /**
+     * 
+     * @param wordsFile
+     * @throws Exception
+     */
     public HangmanDudePlainView( String wordsFile ) throws Exception
     {
         super( wordsFile );
@@ -22,23 +32,25 @@ public class HangmanDudePlainView extends HangmanDudeGameModel
     }
 
 
+    /**
+     * 
+     * @throws Exception
+     */
     private void initGame() throws Exception
     {
         System.out.println( "WELCOME TO HANGMANDUDE \n" );
-        while ( playerType == 0 )
+        while ( getPlayerType() == 0 )
         {
             System.out.print( "Type \"set\" to set the word, \n"
                 + "or type \"guess\" to guess a word: " );
             String s = scan.next().toLowerCase();
             if ( s.equals( "set" ) )
             {
-                playerType = 1;
-                setPlayerType();
+                setPlayerType(1);
 
                 while ( this.word == null )
                 {
                     System.out.print( "\nPick a Word: " );
-                    Scanner scan = new Scanner( System.in );
                     String word = scan.nextLine();
                     if ( !setWord( word ) )
                     {
@@ -49,8 +61,7 @@ public class HangmanDudePlainView extends HangmanDudeGameModel
             }
             else if ( s.equals( "guess" ) )
             {
-                playerType = 2;
-                setPlayerType();
+                setPlayerType(2);
                 getWordFromServer();
             }
             else
@@ -60,18 +71,21 @@ public class HangmanDudePlainView extends HangmanDudeGameModel
         playGame();
 
     }
-    public void challange_was_accepted() {}
 
+
+    /**
+     * 
+     */
     public void playGame() throws Exception
     {
         int last = 0;
         ;
         while ( !isGameOver() )
         {
-            if ( guesses.size() != last || playerType == 2 )
+            if ( guesses.size() != last || getPlayerType() == 2 )
             {
                 drawHangman();
-                if ( playerType == 2 )
+                if ( getPlayerType() == 2 )
                 {
                     System.out.print( "Guess next Letter: " );
                     String s = scan.next().toLowerCase();
@@ -85,6 +99,9 @@ public class HangmanDudePlainView extends HangmanDudeGameModel
     }
 
 
+    /**
+     * 
+     */
     public void drawHangman()
     {
         // Draws the hangman in plain text.
@@ -153,15 +170,15 @@ public class HangmanDudePlainView extends HangmanDudeGameModel
         // Draws the ending if game is over.
         if ( isGameOver() )
         {
-            if ( playerType == 2 && areAllLettersGuessed() )
+            if ( getPlayerType() == 2 && areAllLettersGuessed() )
             {
                 System.out.println( "YOU WIN" );
             }
-            else if ( playerType == 1 && areAllLettersGuessed() )
+            else if ( getPlayerType() == 1 && areAllLettersGuessed() )
             {
                 System.out.println( "YOUR OPPONENT HAS SUCCEEDED." );
             }
-            else if ( !areAllLettersGuessed() && playerType == 2 )
+            else if ( !areAllLettersGuessed() && getPlayerType() == 2 )
             {
                 System.out.println();
                 System.out.println( " .-\"\"-." );

@@ -1,5 +1,10 @@
 package HangmanDude;
 
+/**
+ * 
+ * @author Team 17
+ *
+ */
 public class NetworkingConstants {
 	public static String ACTIVEMQ_URL = "tcp://mmenarini.ucsd.edu:61616";
 	public static String USERNAME = "student";	

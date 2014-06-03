@@ -9,7 +9,12 @@ import javax.jms.TextMessage;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.springframework.jms.connection.CachingConnectionFactory;
 
-
+/**
+ * Contains a main method to clear the server queue.
+ * 
+ * @author Team 17
+ *
+ */
 public class HangmanUtil {
 	public static void main(String...args) throws JMSException, InterruptedException {
 		 Connection connection =  (Connection) new ActiveMQConnectionFactory(

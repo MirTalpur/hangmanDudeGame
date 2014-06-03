@@ -24,6 +24,11 @@ import org.springframework.jms.connection.CachingConnectionFactory;
 
 @Configuration
 @ComponentScan
+/**
+ * 
+ * @author Team 17
+ *
+ */
 public class NetworkingController implements MessageListener
 {
     Connection connection = null;
@@ -39,11 +44,11 @@ public class NetworkingController implements MessageListener
     private final boolean debug = false;
 
 
-    public NetworkingController()
-    {
-    }
-
-
+    /**
+     * 
+     * @param msg_listener
+     * @throws JMSException
+     */
     public NetworkingController( HangmanMessageListener msg_listener )
         throws JMSException
     {
@@ -61,6 +66,11 @@ public class NetworkingController implements MessageListener
     }
 
 
+    /**
+     * 
+     * @param size
+     * @return
+     */
     public String randomString( int size )
     {
         String s = "abcdefghijklmnopqrstuvwxyz";
@@ -72,6 +82,10 @@ public class NetworkingController implements MessageListener
     }
 
 
+    /**
+     * 
+     * @throws JMSException
+     */
     public void end() throws JMSException
     {
         if ( game_challange_queue_name != null )
@@ -88,7 +102,10 @@ public class NetworkingController implements MessageListener
     }
 
 
-    // @Bean
+    /**
+     * 
+     * @return
+     */
     ConnectionFactory connectionFactory()
     {
         return new CachingConnectionFactory( new ActiveMQConnectionFactory( NetworkingConstants.USERNAME,
@@ -97,6 +114,12 @@ public class NetworkingController implements MessageListener
     }
 
 
+    /**
+     * 
+     * @param queue_name
+     * @return
+     * @throws JMSException
+     */
     private String readQueueSync( String queue_name ) throws JMSException
     {
         Queue queue = session.createQueue( NetworkingConstants.QUEUE_PREFIX
@@ -111,6 +134,11 @@ public class NetworkingController implements MessageListener
     }
 
 
+    /**
+     * 
+     * @param queue_name
+     * @throws JMSException
+     */
     private void readQueueAsync( String queue_name ) throws JMSException
     {
         Queue queue = session.createQueue( NetworkingConstants.QUEUE_PREFIX
@@ -124,6 +152,12 @@ public class NetworkingController implements MessageListener
     }
 
 
+    /**
+     * 
+     * @param queue_name
+     * @param message
+     * @throws JMSException
+     */
     private void queueMessage( String queue_name, String message )
         throws JMSException
     {
@@ -137,6 +171,10 @@ public class NetworkingController implements MessageListener
     }
 
 
+    /**
+     * 
+     * @throws Exception
+     */
     public void GamerAcceptChallange() throws Exception
     {
         if ( game_challange_queue_name == null )
@@ -152,6 +190,10 @@ public class NetworkingController implements MessageListener
     }
 
 
+    /**
+     * 
+     * @throws Exception
+     */
     public void GamerRejectChallange() throws Exception
     {
         if ( game_challange_queue_name == null )
@@ -166,6 +208,12 @@ public class NetworkingController implements MessageListener
     }
 
 
+    /**
+     * 
+     * @return
+     * @throws JMSException
+     * @throws InterruptedException
+     */
     public String GamerGetGameChallangeWord()
         throws JMSException,
         InterruptedException
@@ -186,6 +234,11 @@ public class NetworkingController implements MessageListener
     }
 
 
+    /**
+     * 
+     * @param word
+     * @throws JMSException
+     */
     public void ChallangerCreateGame( String word ) throws JMSException
     {
         String random_hash = randomString( 5 );
@@ -196,6 +249,11 @@ public class NetworkingController implements MessageListener
     }
 
 
+    /**
+     * 
+     * @param guess
+     * @throws Exception
+     */
     public void GamerGuessLetter( String guess ) throws Exception
     {
         if ( game_challange_queue_name == null )
@@ -205,6 +263,9 @@ public class NetworkingController implements MessageListener
     }
 
 
+    /**
+     * 
+     */
     public void onMessage( Message msg )
     {
         if ( debug )

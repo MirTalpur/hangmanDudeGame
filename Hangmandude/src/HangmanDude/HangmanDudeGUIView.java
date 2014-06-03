@@ -17,8 +17,10 @@ import javax.swing.SwingConstants;
 
 
 /**
+ * GUI that extends hangmandudegamemodel and implements a gui representation of
+ * the game.
  * 
- * @author Ali
+ * @author Team 17
  */
 public class HangmanDudeGUIView extends HangmanDudeGameModel
 {
@@ -111,10 +113,9 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
 
                     public void run()
                     {
-                        playerType = 2;
                         try
                         {
-                            setPlayerType();
+                            setPlayerType( 2 );
                             getWordFromServer();
 
                             START.setVisible( false );
@@ -125,12 +126,10 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
                                 str += "_ ";
                             AREA.setText( str );
                             AREA.setVisible( true );
-                            // jPanel2.setVisible(false);
                             images[0].setVisible( false );
                         }
                         catch ( Exception e )
                         {
-                            // TODO Auto-generated catch block
                             e.printStackTrace();
                         }
 
@@ -150,10 +149,9 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
         {
             public void actionPerformed( java.awt.event.ActionEvent evt )
             {
-                playerType = 1;
                 try
                 {
-                    setPlayerType();
+                    setPlayerType( 1 );
                     String s = "";
                     while ( !setWord( s ) )
                     {
@@ -205,7 +203,7 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
 
         // AREA.setBackground(new Color(Color.TRANSLUCENT));
         AREA.setForeground( Color.WHITE );
-        AREA.setFont( new Font( Font.MONOSPACED, Font.BOLD, 25 ) );
+        AREA.setFont( new Font( Font.MONOSPACED, Font.BOLD, 18 ) );
         AREA.setHorizontalAlignment( SwingConstants.CENTER );
         jPanel2.add( AREA );
         AREA.setVisible( false );
@@ -267,10 +265,14 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
         // System.out.println( "test" );
         frame.setVisible( true );
     }
-    
-    public void guessLetter(String guess) throws Exception
+
+
+    /**
+     * 
+     */
+    public void guessLetter( String guess ) throws Exception
     {
-        
+
         if ( word.contains( guess ) )
         {
             int offset = 0;
@@ -290,11 +292,16 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
     }
 
 
+    /**
+     * 
+     * @param guess
+     * @throws Exception
+     */
     private void checkStrikes( String guess ) throws Exception
     {
         super.guessLetter( guess );
         guessLetter( guess );
-        
+
         if ( isGameOver() )
         {
             if ( areAllLettersGuessed() )
@@ -311,13 +318,9 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
     }
 
 
-    public void challange_was_accepted()
-    {
-        waitingLabel.setVisible( false );
-
-    }
-
-
+    /**
+     * 
+     */
     @Override
     public void playGame()
     {
@@ -325,6 +328,9 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
     }
 
 
+    /**
+     * 
+     */
     @Override
     public void challangeAccepted() throws JMSException
     {
@@ -332,13 +338,16 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
     }
 
 
+    /**
+     * 
+     */
     @Override
-    public void playerGuessed( String guess ) 
+    public void playerGuessed( String guess )
     {
         super.playerGuessed( guess );
         try
         {
-            guessLetter(guess);
+            guessLetter( guess );
         }
         catch ( Exception e )
         {
