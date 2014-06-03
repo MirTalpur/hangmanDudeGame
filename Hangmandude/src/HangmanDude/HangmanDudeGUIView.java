@@ -303,7 +303,7 @@ public class HangmanDudeGUIView extends HangmanDudeGameModel
             }
             else
             {
-                JOptionPane.showMessageDialog( null, "You Lost!" );
+                JOptionPane.showMessageDialog( null, "You Lost! The word was " +  word);
             }
             // GAME IS OVER. END
             System.exit( 0 );
