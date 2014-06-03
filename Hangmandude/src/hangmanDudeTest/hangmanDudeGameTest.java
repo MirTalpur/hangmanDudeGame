@@ -13,9 +13,11 @@ import HangmanDude.*;
 
 public class hangmanDudeGameTest {
 	HangmanDudeGameModel hangmanDudeGameTest;
+	
 	public hangmanDudeGameTest() throws JMSException, InterruptedException, URISyntaxException, IOException {
-		hangmanDudeGameTest = new HangmanDudePlainView();
 		
+		try {hangmanDudeGameTest = new HangmanDudePlainView("words.txt");}
+			catch(Exception e) {System.out.println("hangmanDudeGameTest() Exception " + e);}
 	}
 
 	@Test
