@@ -10,17 +10,27 @@ import HangmanDude.*;
 
 import org.junit.Test;
 
+/*
+ * Tests GUI View
+ */
+
 public class hangmanDudeTest {
+	HangmanDudeGameModel test;
 
 	@Test
-	public void hangmanDudeTest() throws JMSException, InterruptedException, URISyntaxException {
-		wordsetter test = new wordsetterPlain("words.txt");
+	public void hangmanDudeTesting() throws JMSException, InterruptedException, URISyntaxException
+	{
+		//Initialize GUI Hangman
+		try {test = new HangmanDudeGUIView("words.txt");}
+			catch(Exception e) {System.out.println("hangmanDudeGameTest() Exception " + e);}
+		
 		//check if its null
-		assertNotNull("Is it null yo",test);
+		assertNotNull("Is it null yo", test);
+		
 		//print out the string
 		test.setWord("boss");
+		
 		//check if they equal
 		assertEquals("Is it Equal yo","boss",test.getWord());
 	}
-	
 }

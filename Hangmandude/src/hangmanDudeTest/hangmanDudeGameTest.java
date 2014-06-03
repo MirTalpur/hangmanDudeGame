@@ -11,12 +11,17 @@ import org.junit.Test;
 
 import HangmanDude.*;
 
+/*
+ * Tests Console View
+ */
+
 public class hangmanDudeGameTest {
 	HangmanDudeGameModel hangmanDudeGameTest;
 	
 	@Test
-	public void hangmanDudeGameTesting() throws JMSException, InterruptedException, URISyntaxException, IOException{
-		
+	public void hangmanDudeGameTesting() throws JMSException, InterruptedException, URISyntaxException, IOException
+	{
+		//Initialize Console Hangman
 		try {hangmanDudeGameTest = new HangmanDudePlainView("words.txt");}
 			catch(Exception e) {System.out.println("hangmanDudeGameTest() Exception " + e);}
 
