@@ -14,14 +14,11 @@ import HangmanDude.*;
 public class hangmanDudeGameTest {
 	HangmanDudeGameModel hangmanDudeGameTest;
 	
-	public hangmanDudeGameTest() throws JMSException, InterruptedException, URISyntaxException, IOException {
+	@Test
+	public void hangmanDudeGameTesting() throws JMSException, InterruptedException, URISyntaxException, IOException{
 		
 		try {hangmanDudeGameTest = new HangmanDudePlainView("words.txt");}
 			catch(Exception e) {System.out.println("hangmanDudeGameTest() Exception " + e);}
-	}
-
-	@Test
-	public void hangmanDudeGameTesting() {
 
 		// test if null
 		assertNotNull("Is it null yo", hangmanDudeGameTest);
@@ -41,16 +38,16 @@ public class hangmanDudeGameTest {
 		// check if gameOver it should be true since we inserted 7 for strikes
 		// and MAXSTRIKE is 6
 
-		assertEquals(hangmanDudeGameTest.isGameOver(), true);
+		assertEquals(true, hangmanDudeGameTest.isGameOver());
 
 		// set strikes to 4
 		hangmanDudeGameTest.strikes = 4;
 
 		// now gameover should be false
-		assertEquals(hangmanDudeGameTest.isGameOver(), false);
+		assertEquals(false, hangmanDudeGameTest.isGameOver());
 
 		// check if all letters are guessed and should be false
-		assertEquals(hangmanDudeGameTest.areAllLettersGuessed(), false);
+		assertEquals(false, hangmanDudeGameTest.areAllLettersGuessed());
 	}
 
 }
